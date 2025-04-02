@@ -1,0 +1,6 @@
+
+add_executable(generate_mnemonic generate_mnemonic.cpp)
+target_link_libraries(generate_mnemonic libavax)
+
+add_executable(addresses_from_mnemonic addresses_from_mnemonic.cpp)
+target_link_libraries(addresses_from_mnemonic libavax)
