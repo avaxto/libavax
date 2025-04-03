@@ -21,13 +21,18 @@
 #include <iostream>
 #include "crypto/cb58.h"
 
-struct Test {
+/*
+    This example demos how to encode and decode a buffer to a base58 string.
+    This is NOT a test case.
+*/
+
+struct AddressStruct {
     std::vector<uint8_t> buffer;
     std::string string;
     std::string checksum;
 };
 
-std::vector<Test> tests = {
+std::vector<AddressStruct> examples = {
     {
         {0x00, 0xfe, 0x7b, 0xd0, 0xe0, 0x03, 0x2b, 0x8d, 0x2c, 0x11, 0x56,
          0x84, 0x1f, 0xa0, 0x60, 0x14, 0x56, 0xaa, 0xac, 0x8f, 0x3c, 0x0e,
@@ -58,13 +63,14 @@ std::vector<Test> tests = {
     }
 };
 
-int main(int argc, char const *argv[])
-{
-    for (const auto& test : tests) {
-        // addresses should all be the same    
-        std::cout << test.string << std::endl;
-        const auto encd  = crypto::base58_encode(test.buffer);
+
+int main(int argc, char const *argv[]) {
+    for (const auto& ex : examples) {
+        // addresses should be equal
+        std::cout << ex.string << std::endl;
+        const auto encd  = crypto::base58_encode(ex.buffer);
         std::cout << encd << std::endl;
     }
+
     return 0;
 }

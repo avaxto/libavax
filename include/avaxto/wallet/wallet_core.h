@@ -20,9 +20,9 @@
 
 namespace avalanche::wallet {
 
-class wallet_core {
-    
-};
+    class wallet_core {
+        
+    };
 
 } // namespace avalanche::wallet
 
