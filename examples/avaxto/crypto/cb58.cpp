@@ -19,7 +19,7 @@
 #include <string>
 #include <cstdint>
 #include <iostream>
-#include "crypto/cb58.h"
+#include "avaxto/crypto/cb58.h"
 
 /*
     This example demos how to encode and decode a buffer to a base58 string.

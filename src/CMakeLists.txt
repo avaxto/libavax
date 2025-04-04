@@ -6,10 +6,10 @@ add_library(libavax
 
 target_link_libraries(libavax
     PUBLIC
+    bitcoin-system
     boost_system
     boost_program_options
     boost_regex
     ssl
-    crypto  
-    bitcoin-system
+    crypto      
 )
