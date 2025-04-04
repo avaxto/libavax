@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef UTILS_FUNCS_H
-#define UTILS_FUNCS_H
+#ifndef AVAXTO_UTILS_FUNCS_H
+#define AVAXTO_UTILS_FUNCS_H
 
 #include <string>
 
