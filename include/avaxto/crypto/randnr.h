@@ -20,14 +20,14 @@
 
 #include <bitcoin/system.hpp>
 #include <vector>
-#include <openssl/rand.h>
-#include <fstream>
 
 #define AVAXTO_RANDNUMBER_FILE "/dev/random"
 
-namespace avaxto::crypto {
-    void fill_random_bytes(bc::system::data_chunk& entropy);
-    std::vector<unsigned char> avaxto_generate_privbytes(size_t bytesize);
+namespace avaxto {
+    namespace crypto {
+        void fill_random_bytes(bc::data_chunk& entropy);
+        std::vector<unsigned char> avaxto_generate_privbytes(size_t bytesize);
+    }
 }
 
 

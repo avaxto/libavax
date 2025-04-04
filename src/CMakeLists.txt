@@ -1,9 +1,14 @@
 add_library(libavax
     avaxto/wallet/mnemonic.cpp
+    avaxto/crypto/cb58.cpp
+    avaxto/crypto/randnr.cpp
 )
 
 target_link_libraries(libavax
+    PUBLIC
     boost_system
+    boost_program_options
+    boost_regex
     ssl
     crypto  
     bitcoin-system

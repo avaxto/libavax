@@ -4,13 +4,32 @@ project(libavax)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-#set(CMAKE_VERBOSE_MAKEFILE true)
+set(CMAKE_VERBOSE_MAKEFILE true)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
 endif()
 
 include(FetchContent)
+
+# Check if LIBBITCOIN_PATH environment variable is set
+if(DEFINED ENV{LIBBITCOIN_PATH})
+    set(LIBBITCOIN_PATH $ENV{LIBBITCOIN_PATH})
+    message(STATUS "Using LIBBITCOIN_PATH from environment: ${LIBBITCOIN_PATH}")
+else()
+    # Get user's home directory
+    if(WIN32)
+        set(USER_HOME_DIR $ENV{USERPROFILE})
+    else()
+        set(USER_HOME_DIR $ENV{HOME})
+    endif()
+    set(LIBBITCOIN_PATH "${USER_HOME_DIR}/libbitcoin-build")
+    message(STATUS "LIBBITCOIN_PATH not set, using default: ${LIBBITCOIN_PATH}")
+endif()
+
+# Set include and link directories for libbitcoin
+include_directories(${LIBBITCOIN_PATH}/include)
+link_directories(${LIBBITCOIN_PATH}/lib)
 
 FetchContent_Declare(
 nlohmann_json
@@ -34,3 +53,5 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(examples)
+
+

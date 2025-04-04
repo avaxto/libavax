@@ -16,13 +16,16 @@
  */
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/system/wallet/mnemonic.hpp>
+#include <boost/algorithm/string.hpp>
+
 #include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
 
 #include "avaxto/wallet/mnemonic.h"
-#include "crypto/randnr.h"
+#include "avaxto/crypto/randnr.h"
 
 namespace avaxto {
     namespace wallet {
@@ -32,7 +35,7 @@ namespace avaxto {
 
         std::string new_mnemonic() {
             constexpr int entropy_bytes{ENTROPY_SIZE};
-            bc::system::data_chunk my_entropy(entropy_bytes);
+            bc::data_chunk my_entropy(entropy_bytes);
             avaxto::crypto::fill_random_bytes(my_entropy);
 
             int zero_count = 0;
@@ -45,8 +48,13 @@ namespace avaxto {
                 throw std::runtime_error{"Bad entropy, too many zeros found. Try again."};
             }            
 
-            bc::system::wallet::mnemonic mnm{my_entropy, bc::system::language::en};
-            return mnm.sentence();
+            const auto mnm_list = libbitcoin::wallet::create_mnemonic(my_entropy);
+            std::string mnm_sentence;
+            for (const auto& word : mnm_list) {
+                mnm_sentence += word + " ";
+            }
+            boost::algorithm::trim(mnm_sentence);
+            return mnm_sentence;
         }
     }
 }
