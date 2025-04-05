@@ -18,7 +18,6 @@
 #include <bitcoin/system.hpp>
 #include <bitcoin/system/wallet/mnemonic.hpp>
 #include <boost/algorithm/string.hpp>
-
 #include <algorithm>
 #include <iostream>
 #include <fstream>
