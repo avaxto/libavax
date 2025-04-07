@@ -17,5 +17,13 @@ target_link_libraries(avax
 
 # C language lib
 add_library(avax-c
+    avaxto/network/beacons.c
+    avaxto/network/connect.c
+    avaxto/network/fields.c
+    avaxto/network/msg.c
+    avaxto/network/network.c    
+    avaxto/network/opcodes.c
     avaxto/network/peer.c
+    
+    
 )

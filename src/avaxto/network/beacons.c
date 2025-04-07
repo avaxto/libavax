@@ -22,7 +22,7 @@
 #include "avaxto/network/msg.h"
 #include "avaxto/network/peer.h"
 
-void avaxto_connect_beacons(struct avaxto_host avax_beacons[], size_t beacon_count, SSL_CTX *ctx) {
+void avax_connect_beacons(struct avax_host avax_beacons[], size_t beacon_count, SSL_CTX *ctx) {
 
     for (size_t i = 0; i < beacon_count; i++) {
 
@@ -32,9 +32,9 @@ void avaxto_connect_beacons(struct avaxto_host avax_beacons[], size_t beacon_cou
 
         printf("Connecting to %s : %d ...\n", avax_beacons[i].ip, avax_beacons[i].port);
         
-        int conn = avaxto_connect(avax_beacons[i].ip, avax_beacons[i].port);
+        int conn = avax_connect(avax_beacons[i].ip, avax_beacons[i].port);
         printf("Connected fd # %d. Upgrading ... \n", conn);
-        SSL *avax_conn = avaxto_upgrade_connection(conn, ctx);
+        SSL *avax_conn = avax_upgrade_connection(conn, ctx);
         printf("DONE Upgrading connection with %s encryption.\n", SSL_get_cipher(avax_conn));        
                 
         avax_beacon_connections[i].fd = conn;        
@@ -44,9 +44,9 @@ void avaxto_connect_beacons(struct avaxto_host avax_beacons[], size_t beacon_cou
     }
 }
 
-void avaxto_disconnect_beacons(struct avaxto_peer_connection avax_beacons[], size_t beacon_count){
+void avax_disconnect_beacons(struct avax_peer_connection avax_beacons[], size_t beacon_count){
     for (size_t i=0;i<beacon_count;i++) {
-        avaxto_close_peer_connection(avax_beacons + i);
+        avax_close_peer_connection(avax_beacons + i);
     }
 }
 
@@ -54,7 +54,7 @@ void avaxto_disconnect_beacons(struct avaxto_peer_connection avax_beacons[], siz
     Load and connect beacons.
     Beacons are regular hosts, except they should be assumed more trustworthy.
 */
-void avaxto_init_beacons() {
+void avax_init_beacons() {
 
     SSL_CTX *ctx;
     const SSL_METHOD *method = TLS_client_method();
@@ -100,14 +100,14 @@ void avaxto_init_beacons() {
         abort();
     }
     
-    avaxto_connect_beacons(avax_beacons, AVAX_BEACON_LIST_SIZE, ctx);    
+    avax_connect_beacons(avax_beacons, AVAX_BEACON_LIST_SIZE, ctx);    
 }
 
 
-void avaxto_stop_beacons() {
+void avax_stop_beacons() {
     avax_disconnect_beacons(avax_beacon_connections, AVAX_BEACON_LIST_SIZE);
 }
 
-struct avaxto_host *avax_get_random_beacon(void) {
+struct avax_host *avax_get_random_beacon(void) {
     return NULL;
 }

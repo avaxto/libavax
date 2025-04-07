@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
- #ifndef AVAXTO_NETWORK_BEACON_FUNCS
+#ifndef AVAXTO_NETWORK_BEACON_FUNCS
 #define AVAXTO_NETWORK_BEACON_FUNCS
 
 #include <string.h>
@@ -34,7 +34,7 @@ struct avax_host *avax_get_random_beacon(void);
 /*
     Initialize and connect beacons.
 */
-voidavax_init_beacons();
-voidavax_stop_beacons();
+void avax_init_beacons();
+void avax_stop_beacons();
 
 #endif
