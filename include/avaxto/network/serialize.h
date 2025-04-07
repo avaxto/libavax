@@ -18,9 +18,6 @@
 #ifndef AVAXTO_NETWORK_SERIALIZE
 #define AVAXTO_NETWORK_SERIALIZE
 
-
-
-
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -39,7 +36,6 @@ struct avax_serialized_buff {
 };
 
 typedef struct avax_serialized_buff avax_csb_t;
-
 
 #define avax_serialize_buf_len(csb) (csb->pos - csb->buf)
 #define avax_serialize_realloc_size(csb, siz) (avax_serialize_buf_len(csb) + siz)

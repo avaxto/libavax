@@ -14,3 +14,8 @@ target_link_libraries(avax
     ssl
     crypto      
 )
+
+# C language lib
+add_library(avax-c
+    avaxto/network/peer.c
+)

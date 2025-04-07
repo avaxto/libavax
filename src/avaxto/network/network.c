@@ -15,25 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef AVAXTO_NETWORK_MSG
-#define AVAXTO_NETWORK_MSG
+#include <stdio.h>
+#include <stdlib.h>
+#include "avaxto/network/network.h"
 
-#include "avaxto/rawbuf.h"
-#include "opcodes.h"
-#include "fields.h"
+/* 
+    The default network object.    
+    This private structure lives throughout the avaxto process lifetime.
+*/
 
-// current maximum fields in a network message
-#define AVAX_MAX_NETWORK_FIELDS 5
+static struct avax_network _avax_default_network;
 
-struct avax_network_msg {
-	enum AVAX_NETWORK_OPCODES op;
-	avax_rawbuf raw_bufer;
-    avax_rawbuf *field_data[AVAX_MAX_NETWORK_FIELDS];
-	enum AVAX_NETWORK_FIELDS fields[AVAX_MAX_NETWORK_FIELDS];	
-    unsigned char field_count;
-};
+void avax_network_listen() {
+    // TODO Listen for inbound connections.    
+}
 
-struct avax_network_msg avax_network_messages[AVAX_NETWORK_OPCODES_COUNT];
-struct avax_network_msg *avax_network_parse_message(avax_rawbuf *rawbuf);
+void avax_start_network() {
+    printf("Starting avaxto Network...");
+    if (_avax_default_network.connections == NULL) {
+        _avax_default_network.connections = calloc(1, AVAX_INITIAL_CONNECTION_POOL_SIZE * sizeof(struct avax_peer_connection));
+    }    
+    
+    printf("DONE");
+}
 
-#endif
