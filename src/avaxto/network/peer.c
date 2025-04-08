@@ -21,7 +21,7 @@
 #include <openssl/ssl.h>
 #include <stdbool.h>
 
-static void *_cavax_peer_thread(void *vcpc) {
+static void *_avax_peer_thread(void *vcpc) {
     struct avax_peer_connection *cpc = vcpc;
 
     printf("thread started %d\n", cpc->fd);
@@ -53,7 +53,7 @@ static void *_cavax_peer_thread(void *vcpc) {
                 buf, ret, ret
             };
             struct avax_network_msg *msg = avax_network_parse_message(&bx);
-            printf("cavax_connect_beacons msg has %d fields\n", msg->field_count);
+            printf("avax_connect_beacons msg has %d fields\n", msg->field_count);
         }
 
         if (!(cpc->responded_version) && (ret > 0) ) {
@@ -68,7 +68,7 @@ static void *_cavax_peer_thread(void *vcpc) {
 
 int avax_peer_thread(struct avax_peer_connection *cpc) {
 
-    int ret = pthread_create(&(cpc->conn_thread), NULL, _cavax_peer_thread, cpc);
+    int ret = pthread_create(&(cpc->conn_thread), NULL, _avax_peer_thread, cpc);
 
     if (ret != 0) {
         return ret;

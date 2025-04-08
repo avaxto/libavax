@@ -31,13 +31,13 @@ SSL *avax_upgrade_connection(int fd, SSL_CTX *ssl_ctx) {
 
     ctx = SSL_new(ssl_ctx);
     
-    if ( (ret = SSL_CTX_use_certificate_file(ssl_ctx, avaxtoStakingCertFile, SSL_FILETYPE_PEM)) != 1) {
-        fprintf(stderr, "ERROR: SSL_CTX_use_certificate_file %s NOT LOADED. Not PEM format?\n", avaxtoStakingCertFile);
+    if ( (ret = SSL_CTX_use_certificate_file(ssl_ctx, AvaxStakingCertFile, SSL_FILETYPE_PEM)) != 1) {
+        fprintf(stderr, "ERROR: SSL_CTX_use_certificate_file %s NOT LOADED. Not PEM format?\n", AvaxStakingCertFile);
         fprintf(stderr, "Tip: Run avalanchego once to create cert file.\n");
     }
     
-    if ( (ret = SSL_use_RSAPrivateKey_file(ctx, avaxtoStakingKeyFile, SSL_FILETYPE_PEM)) != 1) {
-        fprintf(stderr, "ERROR: SSL_use_RSAPrivateKey_file %s NOT LOADED. Not PEM format?\n", avaxtoStakingKeyFile);
+    if ( (ret = SSL_use_RSAPrivateKey_file(ctx, AvaxStakingKeyFile, SSL_FILETYPE_PEM)) != 1) {
+        fprintf(stderr, "ERROR: SSL_use_RSAPrivateKey_file %s NOT LOADED. Not PEM format?\n", AvaxStakingKeyFile);
         fprintf(stderr, "Tip: Run avalanchego once to create key file.\n");
     }        
         
@@ -66,7 +66,7 @@ SSL *avax_upgrade_connection(int fd, SSL_CTX *ssl_ctx) {
     return ctx;
 }
 
-void avaxto_close_peer_connection(struct avaxto_peer_connection *conn) {
+void avaxto_close_peer_connection(struct avax_peer_connection *conn) {
     SSL_free(conn->ssl);
     close(conn->fd);
 }

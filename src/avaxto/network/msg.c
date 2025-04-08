@@ -237,12 +237,9 @@ struct avax_network_msg avax_network_messages[] = {
 };
 
 
-struct cavax_network_msg *cavax_network_parse_message(avax_rawbuf *rawbuf) {
-
+struct avax_network_msg *avax_network_parse_message(avax_rawbuf *rawbuf) {
     struct avax_network_msg *msg = calloc(1, sizeof(struct avax_network_msg));
-    cavax_rawbuf_copy(&(msg->raw_bufer), rawbuf);
-
+    avax_rawbuf_copy(&(msg->raw_bufer), rawbuf);
     printf("cavax_network_parse_message BUFFER IS %lu BYTES\n", msg->raw_bufer.buffer_size);
-
     return msg;
 }

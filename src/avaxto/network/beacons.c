@@ -72,7 +72,7 @@ void avax_init_beacons() {
             }
         }
 
-        memcpy(avax_beacons[i].ip, avax_ips[i], (port_ptr - *(avax_beacon_ips + i) - 1));
+        memcpy(avax_beacons[i].ip, avax_beacon_ips[i], (port_ptr - *(avax_beacon_ips + i) - 1));
         avax_beacons[i].port = (uint16_t) atoi(port_ptr);
         // TODO get id from string 
         // avax_beacons[i].id = AVAX_BEACON_ids[i]; // ID is read-only

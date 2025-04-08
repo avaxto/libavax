@@ -18,7 +18,7 @@
 #include "avaxto/network/opcodes.h"
 
 // REF: network/commands.go
-char *cavax_network_opcode_name(enum AVAX_NETWORK_OPCODES op){
+char *avax_network_opcode_name(enum AVAX_NETWORK_OPCODES op){
 	switch (op) {
         case AVAX_OP_GETVERSION:
             return "get_version";

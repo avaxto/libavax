@@ -18,7 +18,7 @@
 #include "avaxto/network/fields.h"
 
 
-char *cavax_network_field_name(enum AVAX_NETWORK_FIELDS f){
+char *avax_network_field_name(enum AVAX_NETWORK_FIELDS f){
 	switch (f) {
         case AVAX_FIELD_VERSIONSTR:
             return "VersionStr";
