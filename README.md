@@ -2,7 +2,9 @@
 
 C++ Avalanche / AVAX library
 
-`libavax` a C++23 library. It's experimental and has been tested on linux only at this time.
+`libavax` is an experimental C and C++ AVAX library
+
+Running on linux only at this time. Mac development is slowly ongoing but there are still build issues.
 
 
 # Build
@@ -22,7 +24,7 @@ On Ubuntu/Debian distros, this should cover it:
 
 libavax uses the cmake build generator
 
-On the project source dir, run:
+In the project source dir, run:
 
 ```
 mkdir build
@@ -33,9 +35,11 @@ cmake --build ./build
 sudo cmake --install 
 ```
 
-Binaries will be found under `./build` dir
+Binaries will be found under `./build` 
 
-To clean up and start a new build, just remove `./build` dir. Everything in it is recreated by the build system and can be discarded. Never save any valuable data in `./build`
+To clean up and start a new build, just remove the `./build` directory. Everything in it is recreated by the build system and can be discarded. 
+
+NOTE: Never save any valuable data in `./build`
 
 # Getting Started
 

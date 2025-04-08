@@ -70,6 +70,12 @@ int main(int argc, char const *argv[]) {
         std::cout << ex.string << std::endl;
         const auto encd  = crypto::base58_encode(ex.buffer);
         std::cout << encd << std::endl;
+        if (ex.string != encd) {
+            std::cout << "Encoded address does not match!" << std::endl;
+            return 1;
+        } 
+        std::cout << "Encoded address matches!" << std::endl;        
+        std::cout << std::endl;        
     }
 
     return 0;
