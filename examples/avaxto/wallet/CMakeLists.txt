@@ -8,4 +8,4 @@ boost_regex
 )
 
 add_executable(addresses_from_mnemonic addresses_from_mnemonic.cpp)
-target_link_libraries(addresses_from_mnemonic avax)
+target_link_libraries(addresses_from_mnemonic avax secp256k1 crypto bitcoin-system)

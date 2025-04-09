@@ -1,17 +1,22 @@
 #include <iostream>
 #include <cstdlib>
-#include "avaxto/wallet/mnemonic.h"
 #include <string>
 #include <format>
+#include "avaxto/wallet/mnemonic.h"
+#include "avaxto/wallet/mnemonic_wallet.hpp"
 
-/*    
-    
+/*        
     Take a mnemonic string as input, generate N addresses
 
-    Usage: add_f_m <number_addrs> < ... words>
+    Usage: add_f_m <address_count> <12 or 24 words ...>
+
+    NOTE: For demonstration purposes only. Do not use in production, as your mnemonic string will
+    be stored in the shell history file and can be accessed by system administrators.
+
+
 */
 
-int main(int argc, char const *argv[]){
+int main(int argc, char const *argv[]) {
 
     int num_addrs = 1;
 
@@ -28,8 +33,35 @@ int main(int argc, char const *argv[]){
         mnemonic += std::string(argv[i]) + " ";
     }
     mnemonic = mnemonic.substr(0, mnemonic.length() - 1); // remove last space
-    std::cout << "Mnemonic: " << mnemonic << std::endl;
-    std::cout << "Number of addresses: " << num_addrs << std::endl;
     
+    avaxto::wallet::mnemonic_wallet wallet{mnemonic, 0};
+
+    // Print X-chain addresses
+    std::cout << "X-Chain Addresses:" << std::endl;
+    std::cout << std::setfill('-') << std::setw(80) << "-" << std::endl;
+    for (uint32_t i = 0; i < 10; ++i) {
+        std::cout << "Index " << i << ": " << wallet.derive_x_chain_address(i) << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // Print P-chain addresses
+    std::cout << "P-Chain Addresses:" << std::endl;
+    std::cout << std::setfill('-') << std::setw(80) << "-" << std::endl;
+    for (uint32_t i = 0; i < 10; ++i) {
+        std::cout << "Index " << i << ": " << wallet.derive_p_chain_address(i) << std::endl;
+    }
+    std::cout << std::endl;
+    
+    // Print C-chain addresses
+    std::cout << "C-Chain Addresses:" << std::endl;
+    std::cout << std::setfill('-') << std::setw(80) << "-" << std::endl;
+    for (uint32_t i = 0; i < 10; ++i) {
+        std::cout << "Index " << i << ": " << wallet.derive_c_chain_address(i) << std::endl;
+    }
+    std::cout << std::endl;
+    std::cout << "*** WARNING!!!" << std::endl;
+    std::cout << "*** Do NOT use these addresses. You WILL lose your coins. This is a work in progress. Address derivation is still being developed and is yet to be tested for correctness." << std::endl;
+    std::cout << std::endl;
+
     return 0;
 }

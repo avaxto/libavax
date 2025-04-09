@@ -18,6 +18,8 @@ target_link_libraries(avax
     boost_regex
     ssl
     crypto      
+    secp256k1
+    gmp
 )
 
 # C language lib
