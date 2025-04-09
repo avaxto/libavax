@@ -48,7 +48,7 @@ See the `examples/` folder for sample code and utils built using `libavax`
 
 # Help
 
-Primary support is provided via [rektdbuildr](https://arena.social/rektbuildr) and [avaxto](https://arena.social/avaxto) Arena App Private Chat
+Priority support is provided via [rektbuildr](https://arena.social/rektbuildr) and [avaxto](https://arena.social/avaxto) Arena App Private Chat
 
 Note: @rektbuildr or @avaxto ticket purchase required to access Arena Private Chat
 
