@@ -1,9 +1,13 @@
-add_library(avax
-    avaxto/wallet/mnemonic.cpp
+add_library(avax    
     avaxto/crypto/cb58.cpp
     avaxto/crypto/keccak256.cpp
     avaxto/crypto/randnr.cpp
-    avaxto/utils/funcs.cpp
+    avaxto/utils/funcs.cpp    
+    avaxto/wallet/evm_wallet.cpp
+    avaxto/wallet/hd_scanner.cpp
+    avaxto/wallet/hd_wallet_abstract.cpp
+    avaxto/wallet/mnemonic.cpp
+    avaxto/wallet/mnemonic_wallet.cpp
 )
 
 target_link_libraries(avax

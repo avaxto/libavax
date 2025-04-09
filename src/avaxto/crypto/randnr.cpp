@@ -23,7 +23,7 @@ namespace avaxto {
     namespace crypto {
         constexpr char RANDOM_BYTES_FILENAME[] = "/dev/random";
 
-        void fill_random_bytes(bc::data_chunk& entropy){
+        void fill_random_bytes(LIBBITCOIN_PREFIX::data_chunk& entropy){
             auto entropy_size = entropy.size();    
             std::ifstream ifs(RANDOM_BYTES_FILENAME, std::ios::binary);
             if (!ifs) {

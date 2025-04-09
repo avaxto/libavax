@@ -21,9 +21,9 @@
 #include <memory>
 #include <bitcoin/system.hpp>
 #include "hd_wallet_abstract.hpp"
-#include "avaxto/wallet/EVM/evm_wallet.hpp"
+#include "avaxto/wallet/evm_wallet.hpp"
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
 class mnemonic_wallet : public hd_wallet_abstract {
@@ -48,10 +48,10 @@ public:
 
 private:
     evm_wallet evm_wallet_;
-    bc::system::data_chunk seed_;
-    bc::system::wallet::hd_private master_key_;
-    bc::system::wallet::hd_private account_key_;
-    bc::system::wallet::hd_private eth_account_key_;
+    LIBBITCOIN_PREFIX::data_chunk seed_;
+    LIBBITCOIN_PREFIX::wallet::hd_private master_key_;
+    LIBBITCOIN_PREFIX::wallet::hd_private account_key_;
+    LIBBITCOIN_PREFIX::wallet::hd_private eth_account_key_;
     std::string encrypted_mnemonic_;
 };
 

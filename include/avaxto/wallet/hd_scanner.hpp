@@ -21,8 +21,9 @@
 #include <vector>
 #include <unordered_map>
 #include <bitcoin/system.hpp>
+#include "avaxto/libglobals.h"
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
 enum class chain_type {
@@ -35,7 +36,7 @@ class hd_scanner {
 public:
     // Constructor
     hd_scanner() = default;
-    explicit hd_scanner(const bc::system::wallet::hd_private& account_key, bool is_internal = true);
+    explicit hd_scanner(const LIBBITCOIN_PREFIX::wallet::hd_private& account_key, bool is_internal = true);
 
     // Assignment operators
     hd_scanner& operator=(const hd_scanner& other);
@@ -59,14 +60,14 @@ public:
 
 private:
     uint32_t index_ = 0;
-    std::unordered_map<uint32_t, bc::system::wallet::hd_private> address_cache_;
+    std::unordered_map<uint32_t, LIBBITCOIN_PREFIX::wallet::hd_private> address_cache_;
     std::string change_path_;
-    bc::system::wallet::hd_private account_key_;
+    LIBBITCOIN_PREFIX::wallet::hd_private account_key_;
 
     // Private methods
-    bc::system::wallet::hd_private get_hd_key_for_index(uint32_t index);
-    std::string get_address_from_public_key(const bc::system::data_chunk& public_key, chain_type chain) ;
-    void build_chunk(bc::system::data_chunk& result, const bc::system::data_chunk& prefix, const bc::system::short_hash& hash) ;
+    LIBBITCOIN_PREFIX::wallet::hd_private get_hd_key_for_index(uint32_t index);
+    std::string get_address_from_public_key(const LIBBITCOIN_PREFIX::data_chunk& public_key, chain_type chain) ;
+    void build_chunk(LIBBITCOIN_PREFIX::data_chunk& result, const LIBBITCOIN_PREFIX::data_chunk& prefix, const LIBBITCOIN_PREFIX::short_hash& hash) ;
 };
 
 } // namespace wallet

@@ -1,14 +1,30 @@
-#include "hd_scanner.hpp"
+/*
+ * Copyright (C) 2025 REKTBuilder 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#include "avaxto/wallet/hd_scanner.hpp"
 #include <bitcoin/system.hpp>
-#include "crypto/keccak256.h"
+#include "avaxto/crypto/keccak256.h"
 
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
-using namespace bc::system;
 
-hd_scanner::hd_scanner(const bc::system::wallet::hd_private& account_key, bool is_internal)
+hd_scanner::hd_scanner(const LIBBITCOIN_PREFIX::wallet::hd_private& account_key, bool is_internal)
     : account_key_(account_key) {
     change_path_ = is_internal ? "1" : "0";
 }
@@ -71,7 +87,7 @@ std::vector<std::string> hd_scanner::get_addresses_in_range(uint32_t start, uint
     return addresses;
 }
 
-bc::system::wallet::hd_private hd_scanner::get_hd_key_for_index(uint32_t index) {
+LIBBITCOIN_PREFIX::wallet::hd_private hd_scanner::get_hd_key_for_index(uint32_t index) {
     auto it = address_cache_.find(index);
     if (it != address_cache_.end()) {
         return it->second;
@@ -86,33 +102,33 @@ bc::system::wallet::hd_private hd_scanner::get_hd_key_for_index(uint32_t index) 
 std::string hd_scanner::get_address_for_index(uint32_t index, chain_type chain) {
     auto key = get_hd_key_for_index(index);
     auto public_key = key.to_public().point();
-    return get_address_from_public_key(to_chunk(public_key), chain);
+    return get_address_from_public_key(LIBBITCOIN_PREFIX::to_chunk(public_key), chain);
 }
 
-std::string hd_scanner::get_address_from_public_key(const data_chunk& public_key, chain_type chain)  {
+std::string hd_scanner::get_address_from_public_key(const LIBBITCOIN_PREFIX::data_chunk& public_key, chain_type chain)  {
     // TODO: Implement proper Avalanche address format
     // For now, we'll use Bitcoin P2PKH format as a placeholder
-    short_hash hash = bitcoin_short_hash(public_key);
-    data_chunk prefix;
-    data_chunk address;
+    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::bitcoin_short_hash(public_key);
+    LIBBITCOIN_PREFIX::data_chunk prefix;
+    LIBBITCOIN_PREFIX::data_chunk address;
     
     switch (chain) {
         case chain_type::x_chain:
-            prefix = to_chunk(0x00); // X-chain prefix
+            prefix = {0x00}; // X-chain prefix
             break;
         case chain_type::p_chain:
-            prefix = to_chunk(0x01); // P-chain prefix
+            prefix = {0x01}; // P-chain prefix
             break;
         case chain_type::c_chain:
-            prefix = to_chunk(0x02); // C-chain prefix
+            prefix = {0x02}; // C-chain prefix
             break;
     }
     
     build_chunk(address, prefix, hash);
-    return encode_base58(address);
+    return LIBBITCOIN_PREFIX::encode_base58(address);
 }
 
-void hd_scanner::build_chunk(data_chunk& result, const data_chunk& prefix, const short_hash& hash)  {
+void hd_scanner::build_chunk(LIBBITCOIN_PREFIX::data_chunk& result, const LIBBITCOIN_PREFIX::data_chunk& prefix, const LIBBITCOIN_PREFIX::short_hash& hash)  {
     result.clear();
     result.reserve(prefix.size() + hash.size());
     result.insert(result.end(), prefix.begin(), prefix.end());

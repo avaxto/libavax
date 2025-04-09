@@ -34,7 +34,7 @@ namespace avaxto {
 
         std::string new_mnemonic() {
             constexpr int entropy_bytes{ENTROPY_SIZE};
-            bc::data_chunk my_entropy(entropy_bytes);
+            LIBBITCOIN_PREFIX::data_chunk my_entropy(entropy_bytes);
             avaxto::crypto::fill_random_bytes(my_entropy);
 
             int zero_count = 0;
@@ -47,7 +47,7 @@ namespace avaxto {
                 throw std::runtime_error{"Bad entropy, too many zeros found. Try again."};
             }            
 
-            const auto mnm_list = libbitcoin::wallet::create_mnemonic(my_entropy);
+            const auto mnm_list = LIBBITCOIN_PREFIX::wallet::create_mnemonic(my_entropy);
             std::string mnm_sentence;
             for (const auto& word : mnm_list) {
                 mnm_sentence += word + " ";

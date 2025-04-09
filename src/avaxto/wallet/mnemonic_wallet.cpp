@@ -18,10 +18,10 @@
 #include "avaxto/wallet/mnemonic_wallet.hpp"
 #include <bitcoin/system.hpp>
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
-using namespace bc::system;
+using namespace LIBBITCOIN_PREFIX;
 
 mnemonic_wallet::mnemonic_wallet(const std::string& mnemonic, uint32_t account)
     : hd_wallet_abstract()  // Initialize base class first
@@ -31,25 +31,24 @@ mnemonic_wallet::mnemonic_wallet(const std::string& mnemonic, uint32_t account)
     }
 
     // Convert mnemonic to seed
-    auto mnemonic_words = split(mnemonic);
-    auto mnemonic_instance = std::make_shared<bc::system::wallet::mnemonic>(mnemonic_words);
-    auto seed = mnemonic_instance->to_seed("");  // Empty passphrase
-    seed_ = bc::system::to_chunk(seed);
+    auto mnemonic_words = split(mnemonic);    
+    auto seed = LIBBITCOIN_PREFIX::wallet::decode_mnemonic(mnemonic_words);
+    seed_ = LIBBITCOIN_PREFIX::to_chunk(seed);
 
     // Create master key
-    master_key_ = bc::system::wallet::hd_private(seed_);
+    master_key_ = LIBBITCOIN_PREFIX::wallet::hd_private(seed_);
 
     // Derive account key for Avalanche chains (m/44'/9000'/n')
-    account_key_ = bc::system::wallet::hd_private(seed_)
-                             .derive_private(44 | bc::system::wallet::hd_first_hardened_key)
-                             .derive_private(9000 | bc::system::wallet::hd_first_hardened_key)
-                             .derive_private(account | bc::system::wallet::hd_first_hardened_key);
+    account_key_ = LIBBITCOIN_PREFIX::wallet::hd_private(seed_)
+                             .derive_private(44 | LIBBITCOIN_PREFIX::wallet::hd_first_hardened_key)
+                             .derive_private(9000 | LIBBITCOIN_PREFIX::wallet::hd_first_hardened_key)
+                             .derive_private(account | LIBBITCOIN_PREFIX::wallet::hd_first_hardened_key);
 
     // Derive account key for Ethereum (m/44'/60'/0'/0)    
-    eth_account_key_ = bc::system::wallet::hd_private(seed_)
-                                 .derive_private(44 | bc::system::wallet::hd_first_hardened_key)
-                                 .derive_private(60 | bc::system::wallet::hd_first_hardened_key)
-                                 .derive_private(0 | bc::system::wallet::hd_first_hardened_key)
+    eth_account_key_ = LIBBITCOIN_PREFIX::wallet::hd_private(seed_)
+                                 .derive_private(44 | LIBBITCOIN_PREFIX::wallet::hd_first_hardened_key)
+                                 .derive_private(60 | LIBBITCOIN_PREFIX::wallet::hd_first_hardened_key)
+                                 .derive_private(0 | LIBBITCOIN_PREFIX::wallet::hd_first_hardened_key)
                                  .derive_private(0);
 
     // Initialize base class account key    

@@ -19,30 +19,31 @@
 
 #include <string>
 #include <bitcoin/system.hpp>
+#include "avaxto/libglobals.h"
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
 class evm_wallet {
 public:
     // Constructor
     evm_wallet() = default;
-    explicit evm_wallet(const bc::data_chunk& private_key);
+    explicit evm_wallet(const LIBBITCOIN_PREFIX::data_chunk& private_key);
 
     // Getters
     std::string get_private_key_hex() const;
     std::string get_address() const;
 
     // Address derivation
-    static std::string derive_address_from_private_key(const bc::data_chunk& private_key);
+    static std::string derive_address_from_private_key(const LIBBITCOIN_PREFIX::data_chunk& private_key);
 
 private:
-    bc::data_chunk private_key_;
-    bc::data_chunk public_key_;
+    LIBBITCOIN_PREFIX::data_chunk private_key_;
+    LIBBITCOIN_PREFIX::data_chunk public_key_;
     std::string address_;
 
     // Private methods
-    static std::string public_key_to_address(const bc::data_chunk& public_key);
+    static std::string public_key_to_address(const LIBBITCOIN_PREFIX::data_chunk& public_key);
 };
 
 } // namespace wallet

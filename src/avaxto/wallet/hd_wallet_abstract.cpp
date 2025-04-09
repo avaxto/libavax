@@ -15,12 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "hd_wallet_abstract.hpp"
+#include "avaxto/wallet/hd_wallet_abstract.hpp"
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
-hd_wallet_abstract::hd_wallet_abstract(const bc::system::wallet::hd_private& account_key)
+hd_wallet_abstract::hd_wallet_abstract(const LIBBITCOIN_PREFIX::wallet::hd_private& account_key)
     : account_key_(account_key) {
     internal_scan_ = hd_scanner(account_key_, true);
     external_scan_ = hd_scanner(account_key_, false);

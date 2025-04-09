@@ -15,21 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef AVAXTO_CRYPTO_RANDNR_H
-#define AVAXTO_CRYPTO_RANDNR_H
+#ifndef AVAXTO_LIBGLOBALS_H
+#define AVAXTO_LIBGLOBALS_H
 
-#include <bitcoin/system.hpp>
-#include <vector>
-#include "avaxto/libglobals.h"
-
-#define AVAXTO_RANDNUMBER_FILE "/dev/random"
-
-namespace avaxto {
-    namespace crypto {
-        void fill_random_bytes(LIBBITCOIN_PREFIX::data_chunk& entropy);
-        std::vector<unsigned char> avaxto_generate_privbytes(size_t bytesize);
-    }
-}
+// made into a define because
+// the upcoming version of libbitcoin will require this 
+// to be changed throughout the codebase
+#define LIBBITCOIN_PREFIX bc
 
 
 

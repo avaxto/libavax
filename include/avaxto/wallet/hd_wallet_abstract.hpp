@@ -23,14 +23,14 @@
 #include <bitcoin/system.hpp>
 #include "hd_scanner.hpp"
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
 class hd_wallet_abstract {
 public:
     // Constructor
     explicit hd_wallet_abstract() = default;
-    explicit hd_wallet_abstract(const bc::system::wallet::hd_private& account_key);
+    explicit hd_wallet_abstract(const LIBBITCOIN_PREFIX::wallet::hd_private& account_key);
     virtual ~hd_wallet_abstract() = default;
 
     // Index management
@@ -58,7 +58,7 @@ public:
 protected:
     hd_scanner internal_scan_;
     hd_scanner external_scan_;
-    bc::system::wallet::hd_private account_key_;
+    LIBBITCOIN_PREFIX::wallet::hd_private account_key_;
 
     bool is_hd_ready_ = false;
 
