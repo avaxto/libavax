@@ -1,6 +1,7 @@
 add_library(avax
     avaxto/wallet/mnemonic.cpp
     avaxto/crypto/cb58.cpp
+    avaxto/crypto/keccak256.cpp
     avaxto/crypto/randnr.cpp
     avaxto/utils/funcs.cpp
 )
