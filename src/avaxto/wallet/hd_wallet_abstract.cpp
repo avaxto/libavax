@@ -21,9 +21,10 @@ namespace avaxto {
 namespace wallet {
 
 hd_wallet_abstract::hd_wallet_abstract(const LIBBITCOIN_PREFIX::wallet::hd_private& account_key)
-    : account_key_(account_key) {
-    internal_scan_ = hd_scanner(account_key_, true);
-    external_scan_ = hd_scanner(account_key_, false);
+    : account_key_(account_key), 
+      internal_scan_(hd_scanner(account_key, true)),
+      external_scan_(hd_scanner(account_key, false)) {
+    
 }
 
 uint32_t hd_wallet_abstract::get_external_index() const {

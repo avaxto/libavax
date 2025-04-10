@@ -1,4 +1,5 @@
 add_library(avax    
+    avaxto/crypto/bech32.cpp
     avaxto/crypto/cb58.cpp
     avaxto/crypto/keccak256.cpp
     avaxto/crypto/randnr.cpp

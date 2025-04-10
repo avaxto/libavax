@@ -15,14 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "avaxto/wallet/hd_scanner.hpp"
 #include <bitcoin/system.hpp>
+#include "avaxto/wallet/hd_scanner.hpp"
 #include "avaxto/crypto/keccak256.h"
-
+#include "avaxto/crypto/bech32.h"
 
 namespace avaxto {
 namespace wallet {
-
 
 hd_scanner::hd_scanner(const LIBBITCOIN_PREFIX::wallet::hd_private& account_key, bool is_internal)
     : account_key_(account_key) {
@@ -101,40 +100,39 @@ LIBBITCOIN_PREFIX::wallet::hd_private hd_scanner::get_hd_key_for_index(uint32_t 
 
 std::string hd_scanner::get_address_for_index(uint32_t index, chain_type chain) {
     auto key = get_hd_key_for_index(index);
+    auto xkpb = key.secret();
     auto public_key = key.to_public().point();
     return get_address_from_public_key(LIBBITCOIN_PREFIX::to_chunk(public_key), chain);
 }
 
 std::string hd_scanner::get_address_from_public_key(const LIBBITCOIN_PREFIX::data_chunk& public_key, chain_type chain)  {
-    // TODO: Implement proper Avalanche address format
-    // For now, we'll use Bitcoin P2PKH format as a placeholder
-    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::bitcoin_short_hash(public_key);
-    LIBBITCOIN_PREFIX::data_chunk prefix;
-    LIBBITCOIN_PREFIX::data_chunk address;
-    
+
+    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::bitcoin_short_hash(public_key);    
+
+    std::string prefix;    
     switch (chain) {
         case chain_type::x_chain:
-            prefix = {0x00}; // X-chain prefix
+            prefix = "X-";
             break;
         case chain_type::p_chain:
-            prefix = {0x01}; // P-chain prefix
+            prefix = "P-";
             break;
         case chain_type::c_chain:
-            prefix = {0x02}; // C-chain prefix
+            prefix = "0x";
             break;
     }
     
-    build_chunk(address, prefix, hash);
-    return LIBBITCOIN_PREFIX::encode_base58(address);
-}
+    std::vector<uint8_t> enc;
+    enc.push_back(0);
+    std::vector<unsigned char> const& tch = LIBBITCOIN_PREFIX::to_chunk(hash);
+    bech32::convertbits<8, 5, true>(enc, tch);
+    const auto bc32 = bech32::Encode(bech32::Encoding::BECH32, AVAX_BECH32_HRP, enc);
 
-void hd_scanner::build_chunk(LIBBITCOIN_PREFIX::data_chunk& result, const LIBBITCOIN_PREFIX::data_chunk& prefix, const LIBBITCOIN_PREFIX::short_hash& hash)  {
-    result.clear();
-    result.reserve(prefix.size() + hash.size());
-    result.insert(result.end(), prefix.begin(), prefix.end());
-    result.insert(result.end(), hash.begin(), hash.end());
+    std::stringstream addr_str;
+    addr_str << prefix;
+    addr_str << bc32;
+    return addr_str.str();
 }
-
 
 
 } // namespace wallet

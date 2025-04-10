@@ -67,7 +67,6 @@ private:
     // Private methods
     LIBBITCOIN_PREFIX::wallet::hd_private get_hd_key_for_index(uint32_t index);
     std::string get_address_from_public_key(const LIBBITCOIN_PREFIX::data_chunk& public_key, chain_type chain) ;
-    void build_chunk(LIBBITCOIN_PREFIX::data_chunk& result, const LIBBITCOIN_PREFIX::data_chunk& prefix, const LIBBITCOIN_PREFIX::short_hash& hash) ;
 };
 
 } // namespace wallet
