@@ -125,7 +125,8 @@ std::string hd_scanner::get_address_from_public_key(const LIBBITCOIN_PREFIX::dat
     std::vector<uint8_t> enc;
     enc.push_back(0);
     std::vector<unsigned char> const& tch = LIBBITCOIN_PREFIX::to_chunk(hash);
-    bech32::convertbits<8, 5, true>(enc, tch);
+    bech32::convertbits<8, 5, true>(enc, tch);    
+    // enc esta ok
     const auto bc32 = bech32::Encode(bech32::Encoding::BECH32, AVAX_BECH32_HRP, enc);
 
     std::stringstream addr_str;
