@@ -46,6 +46,7 @@ include_directories(${json_SOURCE_DIR}/include)
 
 if(MACOSX)
     include_directories(/opt/homebrew/include)
+    link_directories(/usr/local/lib)
     link_directories(/opt/homebrew/lib)
     set(CMAKE_C_COMPILER "/opt/local/bin/gcc")
     set(CMAKE_CXX_COMPILER "/opt/local/bin/g++")

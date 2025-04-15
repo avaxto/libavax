@@ -1,11 +1,6 @@
 
 add_executable(generate_mnemonic generate_mnemonic.cpp)
-target_link_libraries(generate_mnemonic 
-avax
-boost_system
-boost_program_options
-boost_regex
-)
+target_link_libraries(generate_mnemonic avax)
 
 add_executable(addresses_from_mnemonic addresses_from_mnemonic.cpp)
 target_link_libraries(addresses_from_mnemonic avax secp256k1 crypto bitcoin-system)

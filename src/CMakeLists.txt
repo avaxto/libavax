@@ -1,4 +1,4 @@
-add_library(avax    
+add_library(avax STATIC   
     avaxto/crypto/bech32.cpp
     avaxto/crypto/cb58.cpp
     avaxto/crypto/keccak256.cpp
@@ -15,12 +15,13 @@ target_link_libraries(avax
     PUBLIC
     bitcoin-system
     boost_system
-    boost_program_options
     boost_regex
     ssl
     crypto      
     secp256k1
     gmp
+    boost_program_options
+
 )
 
 # C language lib

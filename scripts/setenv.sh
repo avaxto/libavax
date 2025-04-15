@@ -6,4 +6,6 @@
 
 
 export AVAXTO_HOME="$(dirname "$0")/.."
+# for Macos
+export DYLD_LIBRARY_PATH=~/libbitcoin-build/lib:$DYLD_LIBRARY_PATH
 
