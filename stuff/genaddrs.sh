@@ -5,4 +5,11 @@
 
 cd "$(dirname "$0")/.."
 
-./build/linux/examples/avaxto/wallet/addresses_from_mnemonic 10 `cat ./stuff/mnemonic.txt` 
+OS_NAME=linux
+if [[ $(uname -s) == "Darwin" ]]; then
+    OS_NAME="mac"
+fi
+
+. ./scripts/setenv.sh
+
+./build/$OS_NAME/examples/avaxto/wallet/addresses_from_mnemonic 10 `cat ./stuff/mnemonic.txt` 
