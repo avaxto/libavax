@@ -59,7 +59,7 @@ mnemonic_wallet::mnemonic_wallet(const std::string& mnemonic, uint32_t account)
     external_scan_ = hd_scanner(account_key_, false);
 
     // Initialize EVM wallet    
-    evm_wallet_ = evm_wallet(to_chunk(eth_account_key_.derive_private(0).secret()));
+    evm_wallet_ = evm_wallet(to_chunk(eth_account_key_.secret()));
 
     // Store encrypted mnemonic
     encrypted_mnemonic_ = mnemonic; // TODO: Implement proper encryption
@@ -101,6 +101,7 @@ std::string mnemonic_wallet::derive_p_chain_address(uint32_t index)  {
 
 std::string mnemonic_wallet::derive_c_chain_address(uint32_t index)  {
     auto eth_key = eth_account_key_.derive_private(index).secret();
+
     return evm_wallet::derive_address_from_private_key(to_chunk(eth_key));
 }
 

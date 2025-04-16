@@ -48,7 +48,7 @@ std::string evm_wallet::get_address() const {
 }
 
 std::string evm_wallet::derive_address_from_private_key(const LIBBITCOIN_PREFIX::data_chunk& private_key) {
-    LIBBITCOIN_PREFIX::ec_compressed point;
+    LIBBITCOIN_PREFIX::ec_uncompressed point;
     LIBBITCOIN_PREFIX::ec_secret secret;
     std::copy(private_key.begin(), private_key.end(), secret.begin());
 

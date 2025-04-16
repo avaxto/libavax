@@ -50,14 +50,14 @@ int main(int argc, char const *argv[]) {
     for (uint32_t i = 0; i < 10; ++i) {
         std::cout << "Index " << i << ": " << wallet.derive_p_chain_address(i) << std::endl;
     }
+    
     std::cout << std::endl;
     
-    // Print C-chain addresses
-    std::cout << "C-Chain Addresses:" << std::endl;
-    std::cout << std::setfill('-') << std::setw(80) << "-" << std::endl;
-    for (uint32_t i = 0; i < 10; ++i) {
-        std::cout << "Index " << i << ": " << wallet.derive_c_chain_address(i) << std::endl;
-    }
+    // Print C-chain address
+    std::cout << "C-Chain Address:" << std::endl;
+    std::cout << std::setfill('-') << std::setw(80) << "-" << std::endl;    
+    std::cout << wallet.derive_c_chain_address(0) << std::endl;
+    
     std::cout << std::endl;
     std::cout << "*** WARNING!!!" << std::endl;
     std::cout << "*** Do NOT use these addresses. You WILL lose your coins. This is a work in progress. Address derivation is still being developed and is yet to be tested for correctness." << std::endl;
