@@ -1,2 +1,3 @@
-add_subdirectory(wallet)
+# Temporarily commented out due to libbitcoin dependencies
+# add_subdirectory(wallet)
 add_subdirectory(crypto)

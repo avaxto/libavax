@@ -17,7 +17,7 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-#include <bitcoin/system/utility/data.hpp>
+#include <libbitcoin/system/utility/data_simple.hpp>
 
 #define AVAX_BECH32_HRP "avax"
 

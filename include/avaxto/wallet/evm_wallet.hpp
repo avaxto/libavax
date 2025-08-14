@@ -18,7 +18,7 @@
 #pragma once
 
 #include <string>
-#include <bitcoin/system.hpp>
+//#include <bitcoin/system.hpp>
 #include "avaxto/libglobals.h"
 
 namespace avaxto {

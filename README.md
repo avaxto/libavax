@@ -6,6 +6,10 @@ C++ Avalanche / AVAX library
 
 Running on linux only at this time. Mac development is slowly ongoing but there are still build issues.
 
+# Sponsors
+
+libavax is sponsored by [the $AVXTO token](https://dexscreener.com/avalanche/0x2bdebde7e1088e42aafef104b5f7457aca5ab86f). To support our project, please consider becoming an AVXTO investor. We're working on several projects to bring value to our hodlers.
+
 
 # Build
 
@@ -14,10 +18,6 @@ You'll need the standard GNU C++ build tools for your distro
 On Ubuntu/Debian distros, this should cover it:
 
 `sudo apt-get install build-essential autoconf automake libtool pkg-config git`
-
-## Dependencies
-
-* [libbitcoin-system](https://github.com/libbitcoin/libbitcoin-system) v3.8.0 or higher
 
 
 ## Build instructions
@@ -74,3 +74,5 @@ Note: if your support request hasn't been replied to yet, please ping us at one 
 # License
 
 libavax is licensed under the GPL. See LICENSE file.
+
+This source tree incorporates code from the libbitcoin project. [Visit libbitcoin for licensing information](https://github.com/libbitcoin/libbitcoin-system?tab=License-1-ov-file#readme)

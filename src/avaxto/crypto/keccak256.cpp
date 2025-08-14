@@ -9,6 +9,7 @@
 
 #include <cassert>
 #include "avaxto/crypto/keccak256.h"
+#include "avaxto/libglobals.h"
 
 using std::uint8_t;
 using std::uint64_t;
@@ -47,8 +48,8 @@ void keccak256::get_hash(const uint8_t msg[], size_t len, uint8_t hashResult[HAS
 	}
 }
 
-LIBBITCOIN_PREFIX::data_chunk keccak256::get_hash(const LIBBITCOIN_PREFIX::data_chunk& data) {
-	LIBBITCOIN_PREFIX::data_chunk result(HASH_LEN);
+avaxto::libbitcoin::data_chunk keccak256::get_hash(const avaxto::libbitcoin::data_chunk& data) {
+	avaxto::libbitcoin::data_chunk result(HASH_LEN);
 	get_hash(data.data(), data.size(), result.data());
 	return result;
 }

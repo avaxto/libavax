@@ -15,8 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/system.hpp>
-#include <bitcoin/system/hash/functions.hpp>
+//#include <bitcoin/system.hpp>
+//#include <bitcoin/system/hash/functions.hpp>
 #include "avaxto/wallet/hd_scanner.hpp"
 #include "avaxto/crypto/keccak256.h"
 #include "avaxto/crypto/bech32.h"

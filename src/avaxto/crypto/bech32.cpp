@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <numeric>
 #include <optional>
-#include <bitcoin/system/utility/data.hpp>
+#include <libbitcoin/system/utility/data_simple.hpp>
 
 namespace bech32
 {

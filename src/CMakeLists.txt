@@ -5,15 +5,15 @@ add_library(avax STATIC
     avaxto/crypto/randnr.cpp
     avaxto/utils/funcs.cpp    
     avaxto/wallet/evm_wallet.cpp
-    avaxto/wallet/hd_scanner.cpp
-    avaxto/wallet/hd_wallet_abstract.cpp
-    avaxto/wallet/mnemonic.cpp
-    avaxto/wallet/mnemonic_wallet.cpp
+    # Temporarily commented out due to complex libbitcoin dependencies
+    # avaxto/wallet/hd_scanner.cpp
+    # avaxto/wallet/hd_wallet_abstract.cpp
+    # avaxto/wallet/mnemonic.cpp
+    # avaxto/wallet/mnemonic_wallet.cpp
 )
 
 target_link_libraries(avax
     PUBLIC
-    bitcoin-system
     boost_system
     boost_regex
     ssl

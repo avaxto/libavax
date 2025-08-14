@@ -18,15 +18,15 @@
 #ifndef AVAXTO_CRYPTO_RANDNR_H
 #define AVAXTO_CRYPTO_RANDNR_H
 
-#include <bitcoin/system.hpp>
+#include <libbitcoin/system/utility/data_simple.hpp>
 #include <vector>
-#include "avaxto/libglobals.h"
+#include "avaxto/libbitcoin.h"
 
 #define AVAXTO_RANDNUMBER_FILE "/dev/random"
 
 namespace avaxto {
     namespace crypto {
-        void fill_random_bytes(LIBBITCOIN_PREFIX::data_chunk& entropy);
+        void fill_random_bytes(avaxto::libbitcoin::data_chunk& entropy);
         std::vector<unsigned char> avaxto_generate_privbytes(size_t bytesize);
     }
 }

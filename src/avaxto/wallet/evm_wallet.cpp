@@ -16,7 +16,7 @@
  */
 
 #include "avaxto/wallet/evm_wallet.hpp"
-#include <bitcoin/system.hpp>
+//#include <bitcoin/system.hpp>
 #include <secp256k1.h>
 #include "avaxto/crypto/keccak256.h"
 
