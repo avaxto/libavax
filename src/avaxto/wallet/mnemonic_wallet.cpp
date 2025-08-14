@@ -31,8 +31,9 @@ mnemonic_wallet::mnemonic_wallet(const std::string& mnemonic, uint32_t account)
     }
 
     // Convert mnemonic to seed
-    auto mnemonic_words = split(mnemonic);    
-    auto seed = LIBBITCOIN_PREFIX::wallet::decode_mnemonic(mnemonic_words);
+    auto mnemonic_words = split(mnemonic);
+    const LIBBITCOIN_PREFIX::wallet::mnemonic mnm{mnemonic_words};
+    auto seed = mnm.to_seed();
     seed_ = LIBBITCOIN_PREFIX::to_chunk(seed);
 
     // Create master key

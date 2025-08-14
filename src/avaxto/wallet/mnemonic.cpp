@@ -16,7 +16,6 @@
  */
 
 #include <bitcoin/system.hpp>
-#include <bitcoin/system/wallet/mnemonic.hpp>
 #include <boost/algorithm/string.hpp>
 #include <algorithm>
 #include <iostream>
@@ -47,11 +46,8 @@ namespace avaxto {
                 throw std::runtime_error{"Bad entropy, too many zeros found. Try again."};
             }            
 
-            const auto mnm_list = LIBBITCOIN_PREFIX::wallet::create_mnemonic(my_entropy);
-            std::string mnm_sentence;
-            for (const auto& word : mnm_list) {
-                mnm_sentence += word + " ";
-            }
+            LIBBITCOIN_PREFIX::wallet::mnemonic mnm(my_entropy);
+            std::string mnm_sentence = mnm.sentence();
             boost::algorithm::trim(mnm_sentence);
             return mnm_sentence;
         }

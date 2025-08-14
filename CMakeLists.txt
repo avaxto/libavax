@@ -39,6 +39,9 @@ GIT_SHALLOW TRUE)
 
 FetchContent_MakeAvailable(nlohmann_json)
 
+# comment this out for deprecation warnings
+add_compile_options(-Wno-deprecated-declarations -Wno-error -Wno-deprecated-builtins)
+
 include_directories(include)
 include_directories(/usr/local/include)
 include_directories(${json_SOURCE_DIR}/include)
@@ -48,8 +51,8 @@ if(MACOSX)
     include_directories(/opt/homebrew/include)
     link_directories(/usr/local/lib)
     link_directories(/opt/homebrew/lib)
-    set(CMAKE_C_COMPILER "/opt/local/bin/gcc")
-    set(CMAKE_CXX_COMPILER "/opt/local/bin/g++")
+    #set(CMAKE_C_COMPILER "/opt/local/bin/gcc")
+    #set(CMAKE_CXX_COMPILER "/opt/local/bin/g++")
 endif()
 
 add_subdirectory(src)

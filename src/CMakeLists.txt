@@ -21,7 +21,6 @@ target_link_libraries(avax
     secp256k1
     gmp
     boost_program_options
-
 )
 
 # C language lib

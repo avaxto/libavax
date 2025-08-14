@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <numeric>
 #include <optional>
+#include <bitcoin/system/utility/data.hpp>
 
 namespace bech32
 {
@@ -18,7 +19,7 @@ namespace bech32
 namespace
 {
 
-typedef std::vector<uint8_t> data;
+typedef libbitcoin::system::data_chunk data;
 
 /** The Bech32 and Bech32m character set for encoding. */
 const char* CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
@@ -128,7 +129,7 @@ uint32_t EncodingConstant(Encoding encoding) {
 /** This function will compute what 6 5-bit values to XOR into the last 6 input values, in order to
  *  make the checksum 0. These 6 values are packed together in a single 30-bit integer. The higher
  *  bits correspond to earlier values. */
-uint32_t PolyMod(const data& v)
+uint32_t PolyMod(const libbitcoin::system::data_chunk& v)
 {
     // The input is interpreted as a list of coefficients of a polynomial over F = GF(32), with an
     // implicit 1 in front. If the input is [v0,v1,v2,v3,v4], that polynomial is v(x) =
@@ -309,9 +310,9 @@ bool CheckCharacters(const std::string& str, std::vector<int>& errors)
     return errors.empty();
 }
 
-std::vector<unsigned char> PreparePolynomialCoefficients(const std::string& hrp, const data& values)
+libbitcoin::system::data_chunk PreparePolynomialCoefficients(const std::string& hrp, const libbitcoin::system::data_chunk& values)
 {
-    data ret;
+    libbitcoin::system::data_chunk ret;
     ret.reserve(hrp.size() + 1 + hrp.size() + values.size() + CHECKSUM_SIZE);
 
     /** Expand a HRP for use in checksum computation. */
@@ -356,7 +357,7 @@ data CreateChecksum(Encoding encoding, const std::string& hrp, const data& value
 } // namespace
 
 /** Encode a Bech32 or Bech32m string. */
-std::string Encode(Encoding encoding, const std::string& hrp, const data& values) {
+std::string Encode(Encoding encoding, const std::string& hrp, const libbitcoin::system::data_chunk& values) {
     // First ensure that the HRP is all lowercase. BIP-173 and BIP350 require an encoder
     // to return a lowercase Bech32/Bech32m string, but if given an uppercase HRP, the
     // result will always be invalid.
@@ -574,7 +575,7 @@ std::pair<std::string, std::vector<int>> LocateErrors(const std::string& str, Ch
 
 /** Convert from one power-of-2 number base to another. */
 template<int frombits, int tobits, bool pad>
-bool convertbits(std::vector<uint8_t>& out, const std::vector<uint8_t>& in) {
+bool convertbits(libbitcoin::system::data_chunk& out, const libbitcoin::system::data_chunk& in) {
     int acc = 0;
     int bits = 0;
     const int maxv = (1 << tobits) - 1;
@@ -597,7 +598,7 @@ bool convertbits(std::vector<uint8_t>& out, const std::vector<uint8_t>& in) {
 }
 
 // instantiate for bech32
-template bool convertbits<8, 5, true>(std::vector<uint8_t>& out, const std::vector<uint8_t>& in);
+template bool convertbits<8, 5, true>(libbitcoin::system::data_chunk& out, const libbitcoin::system::data_chunk& in);
 
 
 } // namespace bech32

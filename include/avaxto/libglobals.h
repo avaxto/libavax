@@ -21,7 +21,7 @@
 // made into a define because
 // the upcoming version of libbitcoin will require this 
 // to be changed throughout the codebase
-#define LIBBITCOIN_PREFIX bc
+#define LIBBITCOIN_PREFIX libbitcoin::system
 
 
 

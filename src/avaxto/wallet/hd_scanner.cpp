@@ -16,6 +16,7 @@
  */
 
 #include <bitcoin/system.hpp>
+#include <bitcoin/system/hash/functions.hpp>
 #include "avaxto/wallet/hd_scanner.hpp"
 #include "avaxto/crypto/keccak256.h"
 #include "avaxto/crypto/bech32.h"
@@ -107,7 +108,8 @@ std::string hd_scanner::get_address_for_index(uint32_t index, chain_type chain) 
 
 std::string hd_scanner::get_address_from_public_key(const LIBBITCOIN_PREFIX::data_chunk& public_key, chain_type chain)  {
 
-    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::bitcoin_short_hash(public_key);    
+    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::rmd160::hash(LIBBITCOIN_PREFIX::accumulator<LIBBITCOIN_PREFIX::sha256>::hash(public_key));
+    //LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::bitcoin_short_hash(public_key);    
 
     std::string prefix;    
     switch (chain) {
@@ -122,8 +124,8 @@ std::string hd_scanner::get_address_from_public_key(const LIBBITCOIN_PREFIX::dat
             break;
     }
     
-    std::vector<uint8_t> enc;    
-    std::vector<unsigned char> const& tch = LIBBITCOIN_PREFIX::to_chunk(hash);
+    libbitcoin::system::data_chunk enc;    
+    libbitcoin::system::data_chunk const& tch = LIBBITCOIN_PREFIX::to_chunk(hash);
     bech32::convertbits<8, 5, true>(enc, tch);    
     const auto bc32 = bech32::Encode(bech32::Encoding::BECH32, AVAX_BECH32_HRP, enc);
     std::stringstream addr_str;

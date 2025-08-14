@@ -14,8 +14,7 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <bitcoin/system.hpp>
-#include "avaxto/libglobals.h"
+#include "avaxto/libbitcoin.h"
 
 
 /* 
@@ -27,7 +26,7 @@ class keccak256 final {
 	public: 
 		static constexpr int HASH_LEN = 32;
 		static void get_hash(const std::uint8_t msg[], std::size_t len, std::uint8_t hashResult[HASH_LEN]);
-		static LIBBITCOIN_PREFIX::data_chunk get_hash(const LIBBITCOIN_PREFIX::data_chunk& data);
+		static avaxto::libbitcoin::data_chunk get_hash(const avaxto::libbitcoin::data_chunk& data);
 
 	private: 
 		static constexpr int BLOCK_SIZE = 200 - HASH_LEN * 2;
