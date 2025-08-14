@@ -20,9 +20,10 @@
 #include <memory>
 #include <string>
 #include <map>
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 #include "transport.hpp"
 
+namespace avaxto {
 namespace wallet {
 namespace ledger {
 
@@ -38,29 +39,29 @@ public:
     virtual provider_type get_type() const = 0;
     virtual std::string get_version(const std::shared_ptr<transport>& t) = 0;
 
-    virtual std::pair<bc::system::data_chunk, bc::system::data_chunk> get_xpub(
+    virtual std::pair<LIBBITCOIN_PREFIX::data_chunk, LIBBITCOIN_PREFIX::data_chunk> get_xpub(
         const std::shared_ptr<transport>& t,
         const std::string& path,
         bool show = false,
         const std::string& hrp = "avax",
         const std::string& chain_id = "") = 0;
 
-    virtual bc::system::data_chunk get_address(
+    virtual LIBBITCOIN_PREFIX::data_chunk get_address(
         const std::shared_ptr<transport>& t,
         const std::string& path,
         bool show = false,
         const std::string& hrp = "avax",
         const std::string& chain_id = "") = 0;
 
-    virtual std::pair<bc::system::data_chunk, std::map<std::string, bc::system::data_chunk>> sign_hash(
+    virtual std::pair<LIBBITCOIN_PREFIX::data_chunk, std::map<std::string, LIBBITCOIN_PREFIX::data_chunk>> sign_hash(
         const std::shared_ptr<transport>& t,
-        const bc::system::data_chunk& hash,
+        const LIBBITCOIN_PREFIX::data_chunk& hash,
         const std::string& account_path,
         const std::vector<std::string>& signer_paths) = 0;
 
-    virtual std::map<std::string, bc::system::data_chunk> sign_tx(
+    virtual std::map<std::string, LIBBITCOIN_PREFIX::data_chunk> sign_tx(
         const std::shared_ptr<transport>& t,
-        const bc::system::data_chunk& tx,
+        const LIBBITCOIN_PREFIX::data_chunk& tx,
         const std::string& account_path,
         const std::vector<std::string>& signer_paths,
         const std::vector<std::string>& change_paths = {}) = 0;
@@ -73,3 +74,4 @@ protected:
 
 } // namespace ledger
 } // namespace wallet
+} // namespace avaxto

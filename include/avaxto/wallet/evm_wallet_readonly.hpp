@@ -1,16 +1,16 @@
 #pragma once
 
 #include "evm_wallet.hpp"
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 #include <string>
 #include <vector>
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
 class evm_wallet_readonly : public evm_wallet {
 public:
-    explicit evm_wallet_readonly(const bc::system::ec_compressed& uncompressed_key);
+    explicit evm_wallet_readonly(const LIBBITCOIN_PREFIX::ec_compressed& uncompressed_key);
     virtual ~evm_wallet_readonly() = default;
 
     // Override base class methods to make them readonly
@@ -19,8 +19,8 @@ public:
     std::string sign_typed_data(const eth_typed_data& data, uint8_t version) override;
 
 private:
-    bc::system::ec_compressed public_key_;
+    LIBBITCOIN_PREFIX::ec_compressed public_key_;
 };
 
 } // namespace wallet
-} // namespace avalanche
+} // namespace avaxto

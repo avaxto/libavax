@@ -1,10 +1,10 @@
-#include "evm_wallet_readonly.hpp"
+#include "avaxto/wallet/evm_wallet_readonly.hpp"
 #include <stdexcept>
 
-namespace avalanche {
+namespace avaxto {
 namespace wallet {
 
-evm_wallet_readonly::evm_wallet_readonly(const bc::system::ec_compressed& uncompressed_key)
+evm_wallet_readonly::evm_wallet_readonly(const LIBBITCOIN_PREFIX::ec_compressed& uncompressed_key)
     : public_key_(uncompressed_key) {}
 
 void evm_wallet_readonly::sign_transaction(const eth_transaction& tx) {
@@ -20,4 +20,4 @@ std::string evm_wallet_readonly::sign_typed_data(const eth_typed_data& data, uin
 }
 
 } // namespace wallet
-} // namespace avalanche
+} // namespace avaxto

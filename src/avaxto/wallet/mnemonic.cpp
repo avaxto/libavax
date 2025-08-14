@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <bitcoin/system.hpp>
+//#include <bitcoin/system.hpp>
 #include <boost/algorithm/string.hpp>
 #include <algorithm>
 #include <iostream>
@@ -24,6 +24,9 @@
 
 #include "avaxto/wallet/mnemonic.h"
 #include "avaxto/crypto/randnr.h"
+#include "avaxto/libglobals.h"
+// Note: Using our simplified libbitcoin implementation
+// #include <libbitcoin/system/wallet/mnemonic.hpp>
 
 namespace avaxto {
     namespace wallet {

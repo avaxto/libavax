@@ -21,8 +21,9 @@
 #include <vector>
 #include <map>
 #include <functional>
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 
+namespace avaxto {
 namespace wallet {
 namespace ledger {
 
@@ -37,20 +38,20 @@ struct app_config {
 };
 
 struct key_result {
-    bc::system::data_chunk public_key;
-    bc::system::data_chunk chain_code;
+    LIBBITCOIN_PREFIX::data_chunk public_key;
+    LIBBITCOIN_PREFIX::data_chunk chain_code;
     uint16_t return_code;
     std::string error_message;
 };
 
 struct address_result {
-    bc::system::data_chunk public_key;
+    LIBBITCOIN_PREFIX::data_chunk public_key;
     uint16_t return_code;
     std::string error_message;
 };
 
 struct sign_result {
-    std::map<std::string, bc::system::data_chunk> signatures;
+    std::map<std::string, LIBBITCOIN_PREFIX::data_chunk> signatures;
     uint16_t return_code;
     std::string error_message;
 };
@@ -79,7 +80,7 @@ public:
         const std::string& hrp = "avax",
         const std::string& chain_id = "") = 0;
 
-    virtual bc::system::data_chunk get_wallet_address(
+    virtual LIBBITCOIN_PREFIX::data_chunk get_wallet_address(
         const std::string& path,
         const std::string& hrp = "avax") = 0;
 
@@ -90,18 +91,18 @@ public:
     virtual sign_result sign_hash(
         const std::string& account_path,
         const std::vector<std::string>& signer_paths,
-        const bc::system::data_chunk& hash) = 0;
+        const LIBBITCOIN_PREFIX::data_chunk& hash) = 0;
 
     virtual sign_result sign(
         const std::string& account_path,
         const std::vector<std::string>& signer_paths,
-        const bc::system::data_chunk& tx,
+        const LIBBITCOIN_PREFIX::data_chunk& tx,
         const std::vector<std::string>& change_paths = {}) = 0;
 
     virtual sign_result sign_transaction(
         const std::string& account_path,
         const std::vector<std::string>& signer_paths,
-        const bc::system::data_chunk& tx,
+        const LIBBITCOIN_PREFIX::data_chunk& tx,
         const std::string& change_path = "") = 0;
 
 protected:
@@ -110,3 +111,4 @@ protected:
 
 } // namespace ledger
 } // namespace wallet
+} // namespace avaxto

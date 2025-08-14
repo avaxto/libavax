@@ -20,6 +20,11 @@
 #include "avaxto/wallet/hd_scanner.hpp"
 #include "avaxto/crypto/keccak256.h"
 #include "avaxto/crypto/bech32.h"
+#include "avaxto/libglobals.h"
+#include <utility>  // for std::exchange
+// Note: We're using our simplified libbitcoin implementation
+// #include <libbitcoin/system/wallet/hd_private.hpp>
+// #include <libbitcoin/system/math/hash.hpp>
 
 namespace avaxto {
 namespace wallet {
@@ -103,12 +108,12 @@ std::string hd_scanner::get_address_for_index(uint32_t index, chain_type chain) 
     auto key = get_hd_key_for_index(index);
     auto xkpb = key.secret();
     auto public_key = key.to_public().point();
-    return get_address_from_public_key(LIBBITCOIN_PREFIX::to_chunk(public_key), chain);
+    return get_address_from_public_key(public_key, chain);
 }
 
 std::string hd_scanner::get_address_from_public_key(const LIBBITCOIN_PREFIX::data_chunk& public_key, chain_type chain)  {
 
-    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::rmd160::hash(LIBBITCOIN_PREFIX::accumulator<LIBBITCOIN_PREFIX::sha256>::hash(public_key));
+    LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::simple_ripemd160_sha256(public_key);
     //LIBBITCOIN_PREFIX::short_hash hash = LIBBITCOIN_PREFIX::bitcoin_short_hash(public_key);    
 
     std::string prefix;    

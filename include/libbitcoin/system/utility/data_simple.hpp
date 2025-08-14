@@ -52,11 +52,15 @@ typedef std::vector<data_chunk> data_stack;
 constexpr size_t ec_secret_size = 32;
 constexpr size_t ec_compressed_size = 33;
 constexpr size_t ec_uncompressed_size = 65;
+constexpr size_t short_hash_size = 20;
+constexpr size_t hash_size = 32;
 
 // EC key types
 typedef byte_array<ec_secret_size> ec_secret;
 typedef byte_array<ec_compressed_size> ec_compressed;
 typedef byte_array<ec_uncompressed_size> ec_uncompressed;
+typedef byte_array<short_hash_size> short_hash;
+typedef byte_array<hash_size> hash_digest;
 
 /**
  * Convert a byte array to a data_chunk.
@@ -87,6 +91,18 @@ data_chunk decode_base16(const std::string& encoded);
  */
 bool secret_to_public(ec_compressed& out, const ec_secret& secret);
 bool secret_to_public(ec_uncompressed& out, const ec_secret& secret);
+
+/**
+ * Simple split function for strings
+ */
+std::vector<std::string> split(const std::string& str, char delimiter = ' ');
+
+/**
+ * Simple hash functions (placeholders)
+ * In a real implementation, these would use proper cryptographic libraries
+ */
+short_hash simple_ripemd160_sha256(const data_chunk& data);
+hash_digest simple_sha256(const data_chunk& data);
 
 // Implementation of template functions
 template <size_t Size>
@@ -157,6 +173,58 @@ inline bool secret_to_public(ec_uncompressed& out, const ec_secret& secret)
     }
     out[0] = 0x04; // Mark as uncompressed public key
     return true;
+}
+
+// Simplified hash functions - NOT cryptographically secure!
+inline short_hash simple_ripemd160_sha256(const data_chunk& data)
+{
+    short_hash result;
+    // This is NOT a real RIPEMD160(SHA256(data)) implementation!
+    // Just a simplified placeholder
+    for (size_t i = 0; i < result.size(); ++i) {
+        uint8_t byte = 0;
+        for (size_t j = 0; j < data.size(); ++j) {
+            byte ^= data[j] + static_cast<uint8_t>(i + j);
+        }
+        result[i] = byte;
+    }
+    return result;
+}
+
+inline hash_digest simple_sha256(const data_chunk& data)
+{
+    hash_digest result;
+    // This is NOT a real SHA256 implementation!
+    // Just a simplified placeholder
+    for (size_t i = 0; i < result.size(); ++i) {
+        uint8_t byte = 0;
+        for (size_t j = 0; j < data.size(); ++j) {
+            byte ^= data[j] + static_cast<uint8_t>(i + j * 2);
+        }
+        result[i] = byte;
+    }
+    return result;
+}
+
+// Simple string split function
+inline std::vector<std::string> split(const std::string& str, char delimiter)
+{
+    std::vector<std::string> result;
+    std::string current;
+    for (char c : str) {
+        if (c == delimiter) {
+            if (!current.empty()) {
+                result.push_back(current);
+                current.clear();
+            }
+        } else {
+            current += c;
+        }
+    }
+    if (!current.empty()) {
+        result.push_back(current);
+    }
+    return result;
 }
 
 } // namespace system

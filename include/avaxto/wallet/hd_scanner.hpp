@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 #include "avaxto/libglobals.h"
 
 namespace avaxto {
@@ -70,4 +70,4 @@ private:
 };
 
 } // namespace wallet
-} // namespace avalanche 
+} // namespace avaxto 

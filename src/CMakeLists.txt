@@ -5,11 +5,16 @@ add_library(avax STATIC
     avaxto/crypto/randnr.cpp
     avaxto/utils/funcs.cpp    
     avaxto/wallet/evm_wallet.cpp
-    # Temporarily commented out due to complex libbitcoin dependencies
-    # avaxto/wallet/hd_scanner.cpp
-    # avaxto/wallet/hd_wallet_abstract.cpp
-    # avaxto/wallet/mnemonic.cpp
-    # avaxto/wallet/mnemonic_wallet.cpp
+    avaxto/wallet/hd_scanner.cpp
+    avaxto/wallet/hd_wallet_abstract.cpp
+    avaxto/wallet/mnemonic.cpp
+    avaxto/wallet/mnemonic_wallet.cpp
+    # Real BIP39 dictionary implementation
+    libbitcoin/system/dictionary.cpp
+    # Note: Using simplified libbitcoin implementation in headers
+    # libbitcoin/system/mnemonic.cpp
+    # libbitcoin/system/hd_private.cpp
+    # libbitcoin/system/hd_public.cpp
 )
 
 target_link_libraries(avax

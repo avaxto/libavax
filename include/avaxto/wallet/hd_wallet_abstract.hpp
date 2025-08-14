@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 #include "hd_scanner.hpp"
 
 namespace avaxto {
@@ -68,4 +68,4 @@ protected:
 };
 
 } // namespace wallet
-} // namespace avalanche 
+} // namespace avaxto 

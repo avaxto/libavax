@@ -19,9 +19,9 @@
 
 #include <string>
 #include <memory>
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 #include "hd_wallet_abstract.hpp"
-#include "avaxto/wallet/evm_wallet.hpp"
+#include "evm_wallet.hpp"
 
 namespace avaxto {
 namespace wallet {
@@ -56,4 +56,4 @@ private:
 };
 
 } // namespace wallet
-} // namespace avalanche 
+} // namespace avaxto 

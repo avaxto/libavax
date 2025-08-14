@@ -26,7 +26,7 @@
 
 namespace avaxto {
     namespace crypto {
-        void fill_random_bytes(avaxto::libbitcoin::data_chunk& entropy);
+        void fill_random_bytes(LIBBITCOIN_PREFIX::data_chunk& entropy);
         std::vector<unsigned char> avaxto_generate_privbytes(size_t bytesize);
     }
 }

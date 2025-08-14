@@ -16,7 +16,7 @@
  */
 
 #include "avaxto/wallet/mnemonic_wallet.hpp"
-#include <bitcoin/system.hpp>
+#include "avaxto/libbitcoin.h"
 
 namespace avaxto {
 namespace wallet {

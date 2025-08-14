@@ -20,11 +20,7 @@
 
 #include "avaxto/libbitcoin.h"
 
-// made into a define because
-// the upcoming version of libbitcoin will require this 
-// to be changed throughout the codebase
-#define LIBBITCOIN_PREFIX avaxto::libbitcoin
-
-
+// LIBBITCOIN_PREFIX is now defined in libbitcoin.h as libbitcoin::system
+// No need to redefine it here
 
 #endif

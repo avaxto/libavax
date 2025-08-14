@@ -19,27 +19,18 @@
 #define AVAXTO_LIBBITCOIN_H
 
 #include <libbitcoin/system/utility/data_simple.hpp>
+#include <libbitcoin/system/wallet/simple.hpp>
 
-namespace avaxto {
+// Use our simplified namespace bridge
+#define LIBBITCOIN_PREFIX libbitcoin::system
+
 namespace libbitcoin {
+namespace system {
 
-// Import the libbitcoin::system types into the avaxto::libbitcoin namespace
-using data_chunk = ::libbitcoin::system::data_chunk;
-using data_queue = ::libbitcoin::system::data_queue;
-using data_stack = ::libbitcoin::system::data_stack;
+// Import wallet types into system namespace
+using namespace wallet;
 
-// Import EC key types
-using ec_secret = ::libbitcoin::system::ec_secret;
-using ec_compressed = ::libbitcoin::system::ec_compressed;
-using ec_uncompressed = ::libbitcoin::system::ec_uncompressed;
-
-// Import utility functions
-using ::libbitcoin::system::to_chunk;
-using ::libbitcoin::system::encode_base16;
-using ::libbitcoin::system::decode_base16;
-using ::libbitcoin::system::secret_to_public;
-
+} // namespace system
 } // namespace libbitcoin
-} // namespace avaxto
 
 #endif // AVAXTO_LIBBITCOIN_H

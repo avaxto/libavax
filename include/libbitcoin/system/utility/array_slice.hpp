@@ -53,7 +53,7 @@ private:
 
 } // namespace libbitcoin
 
-#include <bitcoin/system/impl/utility/array_slice.ipp>
+#include <libbitcoin/system/impl/utility/array_slice.ipp>
 
 #endif
 
