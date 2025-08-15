@@ -11,10 +11,14 @@ add_library(avax STATIC
     avaxto/wallet/mnemonic_wallet.cpp
     # Real BIP39 dictionary implementation
     libbitcoin/system/dictionary.cpp
-    # Note: Using simplified libbitcoin implementation in headers
-    # libbitcoin/system/mnemonic.cpp
-    # libbitcoin/system/hd_private.cpp
-    # libbitcoin/system/hd_public.cpp
+    # Real libbitcoin-system implementations
+    bitcoin/system/wallet/mnemonic.cpp
+    bitcoin/system/wallet/hd_private.cpp
+    bitcoin/system/wallet/hd_public.cpp
+    bitcoin/system/wallet/encrypted_keys.cpp
+    bitcoin/system/math/crypto.cpp
+    # External AES256 implementation
+    bitcoin/system/math/external/aes256.c
 )
 
 target_link_libraries(avax

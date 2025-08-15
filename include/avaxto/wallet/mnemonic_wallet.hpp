@@ -53,6 +53,10 @@ private:
     LIBBITCOIN_PREFIX::wallet::hd_private account_key_;
     LIBBITCOIN_PREFIX::wallet::hd_private eth_account_key_;
     std::string encrypted_mnemonic_;
+    
+    // Encryption functions following libbitcoin pattern
+    std::string encrypt_mnemonic(const std::string& mnemonic) const;
+    std::string decrypt_mnemonic(const std::string& encrypted) const;
 };
 
 } // namespace wallet

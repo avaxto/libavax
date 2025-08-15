@@ -17,6 +17,9 @@
 
 #include "avaxto/wallet/mnemonic_wallet.hpp"
 #include "avaxto/libbitcoin.h"
+#include "avaxto/crypto/randnr.h"
+#include <bitcoin/system/math/crypto.hpp>
+#include <bitcoin/system/math/hash.hpp>
 
 namespace avaxto {
 namespace wallet {
@@ -62,8 +65,69 @@ mnemonic_wallet::mnemonic_wallet(const std::string& mnemonic, uint32_t account)
     // Initialize EVM wallet    
     evm_wallet_ = evm_wallet(to_chunk(eth_account_key_.secret()));
 
-    // Store encrypted mnemonic
-    encrypted_mnemonic_ = mnemonic; // TODO: Implement proper encryption
+    // Store encrypted mnemonic using AES256 encryption (libbitcoin pattern)
+    encrypted_mnemonic_ = encrypt_mnemonic(mnemonic);
+}
+
+// Encryption function following libbitcoin's AES256 pattern
+std::string mnemonic_wallet::encrypt_mnemonic(const std::string& mnemonic) const {
+    using namespace libbitcoin::system;
+    
+    // Create encryption key from master key (first 32 bytes)
+    libbitcoin::aes_secret encryption_key;
+    auto master_secret = master_key_.secret();
+    std::copy(master_secret.begin(), master_secret.end(), encryption_key.begin());
+    
+    // Convert mnemonic to data
+    auto mnemonic_data = to_chunk(mnemonic);
+    
+    // Pad to AES block size (16 bytes)
+    while (mnemonic_data.size() % libbitcoin::aes256_block_size != 0) {
+        mnemonic_data.push_back(0x00);
+    }
+    
+    // Encrypt in blocks
+    data_chunk encrypted_data;
+    for (size_t i = 0; i < mnemonic_data.size(); i += libbitcoin::aes256_block_size) {
+        libbitcoin::aes_block block;
+        std::copy(mnemonic_data.begin() + i, 
+                 mnemonic_data.begin() + i + libbitcoin::aes256_block_size,
+                 block.begin());
+        
+        libbitcoin::aes256_encrypt(encryption_key, block);
+        encrypted_data.insert(encrypted_data.end(), block.begin(), block.end());
+    }
+    
+    return encode_base16(encrypted_data);
+}
+
+// Decryption function following libbitcoin's AES256 pattern  
+std::string mnemonic_wallet::decrypt_mnemonic(const std::string& encrypted) const {
+    using namespace libbitcoin::system;
+    
+    // Create decryption key from master key (first 32 bytes)
+    libbitcoin::aes_secret decryption_key;
+    auto master_secret = master_key_.secret();
+    std::copy(master_secret.begin(), master_secret.end(), decryption_key.begin());
+    
+    // Decode hex data
+    auto encrypted_data = decode_base16(encrypted);
+    
+    // Decrypt in blocks
+    data_chunk decrypted_data;
+    for (size_t i = 0; i < encrypted_data.size(); i += libbitcoin::aes256_block_size) {
+        libbitcoin::aes_block block;
+        std::copy(encrypted_data.begin() + i,
+                 encrypted_data.begin() + i + libbitcoin::aes256_block_size, 
+                 block.begin());
+        
+        libbitcoin::aes256_decrypt(decryption_key, block);
+        decrypted_data.insert(decrypted_data.end(), block.begin(), block.end());
+    }
+    
+    // Remove padding and convert back to string
+    auto end = std::find(decrypted_data.begin(), decrypted_data.end(), 0x00);
+    return std::string(decrypted_data.begin(), end);
 }
 
 std::shared_ptr<mnemonic_wallet> mnemonic_wallet::create() {
@@ -85,7 +149,7 @@ bool mnemonic_wallet::validate_mnemonic(const std::string& mnemonic) {
 }
 
 std::string mnemonic_wallet::get_mnemonic() const {
-    return encrypted_mnemonic_; // TODO: Implement proper decryption
+    return decrypt_mnemonic(encrypted_mnemonic_);
 }
 
 std::string mnemonic_wallet::get_evm_private_key_hex() const {

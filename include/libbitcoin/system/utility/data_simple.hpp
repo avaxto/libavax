@@ -35,6 +35,9 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <openssl/sha.h>
+#include <openssl/ripemd.h>
+#include <secp256k1.h>
 
 namespace libbitcoin {
 namespace system {
@@ -153,56 +156,75 @@ inline data_chunk decode_base16(const std::string& encoded)
 // In a real application, you would use libsecp256k1 or similar
 inline bool secret_to_public(ec_compressed& out, const ec_secret& secret)
 {
-    // This is a placeholder implementation that does NOT do real crypto!
-    // In a real implementation, you would use secp256k1 library
-    // For now, just fill with deterministic but non-cryptographic data
-    for (size_t i = 0; i < ec_compressed_size; ++i) {
-        out[i] = static_cast<uint8_t>((secret[i % ec_secret_size] + i) % 256);
+    // Real secp256k1 implementation
+    secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+    if (!ctx) return false;
+    
+    secp256k1_pubkey pubkey;
+    if (!secp256k1_ec_pubkey_create(ctx, &pubkey, secret.data())) {
+        secp256k1_context_destroy(ctx);
+        return false;
     }
-    out[0] = 0x02; // Mark as compressed public key
-    return true;
+    
+    size_t output_len = ec_compressed_size;
+    if (!secp256k1_ec_pubkey_serialize(ctx, out.data(), &output_len, &pubkey, SECP256K1_EC_COMPRESSED)) {
+        secp256k1_context_destroy(ctx);
+        return false;
+    }
+    
+    secp256k1_context_destroy(ctx);
+    return output_len == ec_compressed_size;
 }
 
 inline bool secret_to_public(ec_uncompressed& out, const ec_secret& secret)
 {
-    // This is a placeholder implementation that does NOT do real crypto!
-    // In a real implementation, you would use secp256k1 library
-    // For now, just fill with deterministic but non-cryptographic data
-    for (size_t i = 0; i < ec_uncompressed_size; ++i) {
-        out[i] = static_cast<uint8_t>((secret[i % ec_secret_size] + i) % 256);
+    // Real secp256k1 implementation
+    secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN | SECP256K1_CONTEXT_VERIFY);
+    if (!ctx) return false;
+    
+    secp256k1_pubkey pubkey;
+    if (!secp256k1_ec_pubkey_create(ctx, &pubkey, secret.data())) {
+        secp256k1_context_destroy(ctx);
+        return false;
     }
-    out[0] = 0x04; // Mark as uncompressed public key
-    return true;
+    
+    size_t output_len = ec_uncompressed_size;
+    if (!secp256k1_ec_pubkey_serialize(ctx, out.data(), &output_len, &pubkey, SECP256K1_EC_UNCOMPRESSED)) {
+        secp256k1_context_destroy(ctx);
+        return false;
+    }
+    
+    secp256k1_context_destroy(ctx);
+    return output_len == ec_uncompressed_size;
 }
 
 // Simplified hash functions - NOT cryptographically secure!
 inline short_hash simple_ripemd160_sha256(const data_chunk& data)
 {
+    // Real RIPEMD160(SHA256(data)) implementation using OpenSSL
+    hash_digest sha256_result;
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, data.data(), data.size());
+    SHA256_Final(sha256_result.data(), &sha256);
+    
     short_hash result;
-    // This is NOT a real RIPEMD160(SHA256(data)) implementation!
-    // Just a simplified placeholder
-    for (size_t i = 0; i < result.size(); ++i) {
-        uint8_t byte = 0;
-        for (size_t j = 0; j < data.size(); ++j) {
-            byte ^= data[j] + static_cast<uint8_t>(i + j);
-        }
-        result[i] = byte;
-    }
+    RIPEMD160_CTX ripemd160;
+    RIPEMD160_Init(&ripemd160);
+    RIPEMD160_Update(&ripemd160, sha256_result.data(), sha256_result.size());
+    RIPEMD160_Final(result.data(), &ripemd160);
+    
     return result;
 }
 
+// Real SHA256 implementation using OpenSSL
 inline hash_digest simple_sha256(const data_chunk& data)
 {
     hash_digest result;
-    // This is NOT a real SHA256 implementation!
-    // Just a simplified placeholder
-    for (size_t i = 0; i < result.size(); ++i) {
-        uint8_t byte = 0;
-        for (size_t j = 0; j < data.size(); ++j) {
-            byte ^= data[j] + static_cast<uint8_t>(i + j * 2);
-        }
-        result[i] = byte;
-    }
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, data.data(), data.size());
+    SHA256_Final(result.data(), &sha256);
     return result;
 }
 
